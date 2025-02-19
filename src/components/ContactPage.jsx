@@ -1,6 +1,7 @@
 import React from "react";
 import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
 import { FaGlobe } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
@@ -39,7 +40,7 @@ const ContactPage = () => {
             <a href="#" className="hover:text-teal-900">
               About Us
             </a>
-            <a href="#" className="hover:text-teal-900">
+            <a href="/services" className="hover:text-teal-900">
               Services ▼
             </a>
             <a href="#" className="hover:text-teal-900">
@@ -63,7 +64,11 @@ const ContactPage = () => {
       </nav>
 
       {/* Hero Section */}
-      <header
+
+      <motion.header
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1, ease: "easeOut" }}
         className="relative h-60 flex items-start justify-start text-white bg-cover bg-center p-0"
         style={{
           backgroundImage:
@@ -71,25 +76,53 @@ const ContactPage = () => {
         }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-        <div className="relative flex flex-col items-start text-left z-10 gap-4 self-start pl-16 pr-10 pt-12">
+
+        <motion.div
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+          className="relative flex flex-col items-start text-left z-10 gap-4 self-start pl-16 pr-10 pt-12"
+        >
           {/* Vertical Line */}
           <div className="hidden md:block absolute top-14 left-12 right-12 h-24 w-[3px] bg-gray-900"></div>
-          {/* Heading and Paragraph */}
-          <h1 className="text-6xl font-bold">Contact Us</h1>
-          <p className="text-lg">Feel free to keep in touch</p>
-        </div>
-      </header>
 
-      {/* Contact Info - Full Width */}
-      <section className="w-full flex justify-center px-6 py-12">
-        <div className="grid md:grid-cols-4 gap-6 p-6 border border-gray-800 rounded-lg shadow-lg w-full md:w-4/4 lg:w-3/3 min-h-[180px]">
+          {/* Heading */}
+          <motion.h1
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
+            className="text-6xl font-bold"
+          >
+            Contact Us
+          </motion.h1>
+
+          {/* Paragraph */}
+          <motion.p
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1, delay: 1, ease: "easeOut" }}
+            className="text-lg"
+          >
+            Feel free to keep in touch
+          </motion.p>
+        </motion.div>
+      </motion.header>
+
+      {/* Contact Info */}
+      <section className=" flex justify-center px-6 py-12">
+        <motion.div
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="grid md:grid-cols-4 gap-6 p-6 border border-gray-800 rounded-lg shadow-lg w-full md:w-4/4 lg:w-3/3 min-h-[180px]"
+        >
           <div className="flex items-center gap-3 relative">
             <div className="bg-blue-600 p-2 rounded-full">
               <MapPin className="text-white w-6 h-6" />
             </div>
             <div>
               <p className="font-semibold text-lg">Address</p>
-              <p>1227, 18th Main Road,Anna Nagar West, Chennai 600040</p>
+              <p>1227, 18th Main Road, Anna Nagar West, Chennai 600040</p>
             </div>
             <div className="hidden md:block absolute right-0 top-2/2 h-16 w-[1px] bg-gray-400"></div>
           </div>
@@ -118,7 +151,7 @@ const ContactPage = () => {
 
           <div className="flex items-center gap-3">
             <div className="bg-yellow-600 p-2 rounded-full">
-              <Clock className="text-white-600 w-6 h-6" />
+              <Clock className="text-white w-6 h-6" />
             </div>
             <div>
               <p className="font-semibold text-lg">Office Hour</p>
@@ -128,7 +161,7 @@ const ContactPage = () => {
               </p>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
       <section className="w-full flex justify-center px-6 py-12">
         {/* Contact Form & Image Section */}
@@ -178,7 +211,10 @@ const ContactPage = () => {
           </div>
 
           {/* Right Section - Image */}
-          <div
+          <motion.div
+            initial={{ x: "100%", opacity: 0 }} // Start off-screen to the right
+            animate={{ x: 0, opacity: 1 }} // Move to normal position
+            transition={{ duration: 0.8, ease: "easeOut" }} // Smooth transition
             className="w-full md:w-1/2 bg-cover bg-center rounded-r-lg border border-gray-300"
             style={{
               backgroundImage:
@@ -186,7 +222,7 @@ const ContactPage = () => {
               backgroundBlendMode: "overlay",
               backgroundColor: "rgba(0, 0, 0, 0.3)",
             }}
-          ></div>
+          ></motion.div>
         </div>
       </section>
 
@@ -216,10 +252,7 @@ const ContactPage = () => {
                 className="w-40 mb-4"
               />
             </a>
-            <p className="text-sm leading-relaxed">
-              Iaculis letius ad sociosqu taciti diam dolor porta tellus nunc
-              suspendisse aliquet.
-            </p>
+
             <p className="flex items-center mt-2">
               <i className="fas fa-map-marker-alt mr-2"></i> Chennai
             </p>
