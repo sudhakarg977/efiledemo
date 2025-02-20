@@ -8,6 +8,12 @@ import {
   ExclamationCircleIcon,
 } from "@heroicons/react/24/outline";
 
+import PermanentInformationForm from "../forms/ PermanentInformationForm";
+import IdentificationForm from "../forms/IdentificationForm";
+import AddressForm from "../forms/AddressForm";
+import ResidentialStatusForm from "../forms/ResidentialStatusForm";
+import { form } from "framer-motion/client";
+
 const Services = () => {
   const pricingPlans = [
     {
@@ -31,6 +37,7 @@ const Services = () => {
     permanentInfo: false,
     identification: false,
     address: false,
+    residentialStatus: false,
   });
 
   const toggleSection = (section) => {
@@ -79,7 +86,7 @@ const Services = () => {
           </p>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-8 mt-12">
+        <div className="flex flex-wrap justify-center gap-14 mt-12">
           {[
             {
               icon: "fas fa-calculator",
@@ -132,7 +139,13 @@ const Services = () => {
               ].map((step, index) => (
                 <React.Fragment key={index}>
                   <div className="flex items-center space-x-2">
-                    <button className="py-2.5 px-5 text-sm font-medium bg-teal-500 text-white rounded-full hover:bg-teal-600">
+                    <button
+                      className={`py-2.5 px-5 text-sm font-medium rounded-full ${
+                        index === 0
+                          ? "bg-teal-500 text-white hover:bg-teal-600"
+                          : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                      }`}
+                    >
                       {step}
                     </button>
                   </div>
@@ -164,6 +177,7 @@ const Services = () => {
                     <ClipboardDocumentListIcon className="w-6 h-6 text-purple-600" />
                   ),
                   bgColor: "bg-purple-100",
+                  form: <PermanentInformationForm />,
                 },
                 {
                   id: "identification",
@@ -172,6 +186,7 @@ const Services = () => {
                     "To e-file your returns, please provide your Aadhaar, PAN, and contact details provide youcontact details in the",
                   icon: <IdentificationIcon className="w-6 h-6 text-red-600" />,
                   bgColor: "bg-red-100",
+                  form: <IdentificationForm />,
                 },
                 {
                   id: "address",
@@ -180,6 +195,7 @@ const Services = () => {
                     "You can provide either your current address or permanent address of residence current address or permanent ",
                   icon: <HomeIcon className="w-6 h-6 text-blue-600" />,
                   bgColor: "bg-blue-100",
+                  form: <AddressForm />,
                 },
                 {
                   id: "residentialStatus",
@@ -188,6 +204,7 @@ const Services = () => {
                     "The residential status depends on the number of days you stayed in India. Please follow the process to choose ",
                   icon: <HomeIcon className="w-6 h-6 text-purple-600" />,
                   bgColor: "bg-purple-100",
+                  form: <ResidentialStatusForm />,
                 },
               ].map((item) => (
                 <div
@@ -222,8 +239,8 @@ const Services = () => {
                   {/* Description */}
 
                   {sections[item.id] && (
-                    <div className="mt-2 p-2 text-gray-600">
-                      Form inputs can be placed here.
+                    <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+                      {item.form}
                     </div>
                   )}
                 </div>
@@ -263,9 +280,12 @@ const Services = () => {
                     className="w-full mt-4"
                   />
 
-                  <ul className="mt-4 space-y-2 text-gray-100 text-sm">
+                  <ul className="mt-4 text-gray-100 text-sm text-center w-full">
                     {plan.features.map((feature, i) => (
-                      <li key={i} className="flex items-center space-x-2">
+                      <li key={i} className="flex flex-col items-center w-full">
+                        {i !== 0 && (
+                          <div className="w-2/3 border-b border-gray-400 my-2"></div>
+                        )}
                         <span>{feature}</span>
                       </li>
                     ))}

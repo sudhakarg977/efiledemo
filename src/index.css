@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.input-field {
+  @apply w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none;
+}
+
 body {
   background-color: #dde6ed;
 

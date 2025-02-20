@@ -5,12 +5,19 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
-    <nav className="bg-gray-100 text-dark py-4 px-6 flex items-center shadow-md">
-      {/* Logo (Left) */}
-      <img src="Color version.svg" alt="Logo" className="h-10 w-auto" />
+    <nav className="bg-gray-100 text-dark py-4 px-6 flex items-center justify-between shadow-md">
+      {/* Left Section - Logo */}
+      <div className="flex items-center">
+        <img src="Color version.svg" alt="Logo" className="h-10 w-auto" />
+      </div>
 
-      {/* Nav Links & Profile Section (Right) */}
-      <div className="flex items-center ml-auto space-x-8">
+      {/* Center Section - Filing for ITR */}
+      <div className="absolute left-1/2 transform -translate-x-1/2">
+        <span className="text-lg font-medium">Filing for: ITR</span>
+      </div>
+
+      {/* Right Section - Navigation Links & Profile */}
+      <div className="flex items-center space-x-6">
         <a
           href="#home"
           className="hover:text-teal-500 transition-colors duration-200"
@@ -44,26 +51,6 @@ const Navbar = () => {
           >
             <UserCircleIcon className="w-10 h-10 text-gray-700 hover:text-teal-500 transition-all duration-200" />
           </button>
-
-          {isDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-44 bg-white border rounded-lg shadow-lg">
-              <a
-                href="#view-profile"
-                className="block px-4 py-2 hover:bg-teal-500"
-              >
-                View Profile
-              </a>
-              <a href="#settings" className="block px-4 py-2 hover:bg-teal-500">
-                Settings
-              </a>
-              <a
-                href="#logout"
-                className="block px-4 py-2 text-red-500 hover:bg-teal-500"
-              >
-                Logout
-              </a>
-            </div>
-          )}
         </div>
       </div>
     </nav>

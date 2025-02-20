@@ -77,25 +77,26 @@ export default function Signup() {
 
   return (
     <div className="w-full h-full">
-      {/* Navbar */}
       <nav className="bg-gray-100 text-dark py-4 px-6 flex justify-between items-center shadow-md">
         <img src="Color version.svg" alt="Logo" className="h-8 w-auto" />
-        <div className="flex space-x-6">
-          <a href="#home" className="hover:text-blue-400">
+        <div className="flex items-center space-x-6 mr-10">
+          <a href="#home" className="hover:text-teal-400">
             Home
           </a>
-          <a href="#services" className="hover:text-blue-400">
+          <a href="#services" className="hover:text-teal-400">
             Services
           </a>
-          <a href="#about" className="hover:text-blue-400">
+          <a href="#about" className="hover:text-teal-400">
             About
           </a>
-          <a href="#contact" className="hover:text-blue-400">
+          <a href="#contact" className="hover:text-teal-400">
             Contact
           </a>
+          <button className="bg-teal-600 hover:bg-teal-500 rounded-lg font-bold px-4 py-2 text-white">
+            Get Started
+          </button>
         </div>
       </nav>
-
       {/* Main Content */}
       <div className="flex items-center justify-center min-h-[100vh]">
         <div className="flex w-full max-w-4xl bg-gray-800 rounded-2xl shadow-lg overflow-hidden">

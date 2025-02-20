@@ -50,6 +50,8 @@ router.post("/signup", async (req, res) => {
     user = new User({ fullName, email, password: hashedPassword });
 
     await user.save();
+    console.log("User saved, sending welcome email...");
+    await sendWelcomeEmail(email, fullName);
     res.json({ message: "User registered successfully" });
   } catch (error) {
     res.status(500).json({ message: "Server error" });
