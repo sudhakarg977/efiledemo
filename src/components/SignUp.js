@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
+import Navbar from "./Navbar";
+
 const clientId =
   "203749460506-a0p2pi5i1pbu785e67v8onavcubi602b.apps.googleusercontent.com";
 
@@ -77,7 +79,7 @@ export default function Signup() {
 
   return (
     <div className="w-full h-full">
-      <nav className="bg-gray-100 text-dark py-4 px-6 flex justify-between items-center shadow-md">
+      {/* <nav className="bg-gray-100 text-dark py-4 px-6 flex justify-between items-center shadow-md">
         <img src="Color version.svg" alt="Logo" className="h-8 w-auto" />
         <div className="flex items-center space-x-6 mr-10">
           <a href="#home" className="hover:text-teal-400">
@@ -96,10 +98,11 @@ export default function Signup() {
             Get Started
           </button>
         </div>
-      </nav>
+      </nav> */}
+      <Navbar />
       {/* Main Content */}
       <div className="flex items-center justify-center min-h-[100vh]">
-        <div className="flex w-full max-w-4xl bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+        <div className="flex w-full max-w-4xl bg-gray-900 rounded-2xl shadow-lg overflow-hidden">
           {/* Left Side: Signup/Login Form */}
           <div className="w-full sm:w-1/2 p-6 flex flex-col justify-center items-center text-white">
             <motion.div
@@ -150,7 +153,7 @@ export default function Signup() {
                     {showPassword ? <EyeOff /> : <Eye />}
                   </button>
                 </div>
-                <button className="w-full mt-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg font-bold">
+                <button className="w-full mt-4 py-2 bg-teal-600 hover:bg-teal-600 rounded-lg font-bold">
                   {isLogin ? "Login" : "Signup"}
                 </button>
               </form>

@@ -6,22 +6,20 @@ import Slidebar from "./components/Slidebar";
 import ContactPage from "./components/ContactPage";
 import SignUp from "./components/SignUp";
 import Services from "./components/Services";
+import { Home } from "lucide-react";
+import Homepage from "./components/Homepage";
 
 function App() {
   return (
     <Router>
-      <div className="dashboard">
-        {/* <Slidebar /> */}
-        {/* <div className="dashboard-content"> */}
-        <Routes>
-          {/* <Route path="/" element={<Content />} />
-            <Route path="/contactpage" element={<ContactPage />} /> */}
-          <Route path="/" element={<SignUp />} />
-          <Route path="/login" element={<SignUp />} />
-          <Route path="/services" element={<Services />} />
-          {/* <Route path="*" element={<h1>Not Found</h1>} /> */}
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/Homepage" element={<Homepage />} />
+        <Route path="/admin" element={<Content />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<SignUp />} />
+        <Route path="/services" element={<Services />} />
+        {/* <Route path="*" element={<h1>Not Found</h1>} /> */}
+      </Routes>
     </Router>
   );
 }

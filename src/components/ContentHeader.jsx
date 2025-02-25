@@ -1,12 +1,14 @@
-import React from "react";
-import { useState } from "react";
+import React, { use } from "react";
+import { useState, useEffect } from "react";
 import { BiNotification, BiSearch, BiBell, BiUser } from "react-icons/bi";
+
+import UploadedFilesList from "./UploadedFilesList";
 
 const ContentHeader = () => {
   const rows = [
     {
       id: 1,
-      name: "John",
+      name: "Ramesh",
       taxservice: "GST filing",
       paymentstatus: "Completed",
       status: "open",
@@ -14,7 +16,7 @@ const ContentHeader = () => {
     },
     {
       id: 2,
-      name: "smith",
+      name: "Raju",
       taxservice: "ITR filing",
       paymentstatus: "Completed",
       status: "open",
@@ -22,7 +24,7 @@ const ContentHeader = () => {
     },
     {
       id: 3,
-      name: "Doe",
+      name: "Karan",
       taxservice: "GST filing",
       paymentstatus: "Completed",
       status: "open",
@@ -30,7 +32,7 @@ const ContentHeader = () => {
     },
     {
       id: 4,
-      name: "Jane",
+      name: "Deepika",
       taxservice: "ITR filing",
       paymentstatus: "Completed",
       status: "closed",
@@ -38,7 +40,7 @@ const ContentHeader = () => {
     },
     {
       id: 5,
-      name: "Doe",
+      name: "Suhaas",
       taxservice: "GST filing",
       paymentstatus: "Completed",
       status: "open",
@@ -86,9 +88,24 @@ const ContentHeader = () => {
     },
   ];
 
+  const [isOpen, setIsOpen] = useState(false);
+
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [editedComment, setEditedComment] = useState(rows.Comments);
   const [editedStatus, setEditedStatus] = useState("false");
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("theme") === "dark"
+  );
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [darkMode]);
   return (
     <>
       <div className=" sticky top-0 z-50 w-full flex justify-between items-center px-6 py-4 bg-white shadow-md">
@@ -112,6 +129,14 @@ const ContentHeader = () => {
             <BiBell className="w-6 h-6 text-gray-700" />
             {/* Notification Badge */}
             <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></span>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              className="p-2 bg-gray-200 dark:bg-gray-800 text-black dark:text-white rounded"
+            >
+              {darkMode ? "Light Mode" : "Dark Mode"}
+            </button>
           </div>
 
           {/* Profile Icon with Dropdown */}
@@ -211,9 +236,11 @@ const ContentHeader = () => {
                   </td>
 
                   <td className="p-5">
-                    <div className="flex gap-2">
-                      {/* View Button */}
-                      <button className="p-2 rounded hover:bg-gray-100 text-gray-600">
+                    <div className="flex gap-2 relative">
+                      <button
+                        className="p-2 rounded hover:bg-gray-100 text-gray-600"
+                        onClick={() => setIsOpen(!isOpen)}
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 576 512"
@@ -226,7 +253,6 @@ const ContentHeader = () => {
                         </svg>
                       </button>
 
-                      {/* Print Button */}
                       <button className="p-2 rounded hover:bg-green-100 text-green-600">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -240,7 +266,6 @@ const ContentHeader = () => {
                         </svg>
                       </button>
 
-                      {/* Verify Button */}
                       <button className="p-2 rounded hover:bg-blue-100 text-blue-600">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -289,6 +314,18 @@ const ContentHeader = () => {
           </ul>
         </nav>
       </div>
+      {/* //uploaded files */}
+      {isOpen && (
+        <div className="absolute top-10 left-200  bg-white p-4 shadow-lg rounded-lg w-80">
+          <UploadedFilesList /> {/* Your component that shows the document */}
+          <button
+            className="mt-2 p-2 bg-red-500 text-white rounded"
+            onClick={() => setIsOpen(false)}
+          >
+            Close
+          </button>
+        </div>
+      )}
       <div className="p-6">
         <div>
           <a href="#" className="">

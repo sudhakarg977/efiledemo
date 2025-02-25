@@ -7,13 +7,17 @@ import authRoutes from "./routes/authRoutes.js";
 import cookieParser from "cookie-parser";
 import passport from "passport";
 import "./config/passport.js";
+import path from "path";
 
 const app = express();
 
 // Middleware
 app.use(
   cors({
-    origin: "http://localhost:3000", // Make sure this matches your frontend URL
+    origin: [
+      "http://localhost:3000",
+      "https://lambent-truffle-fecc13.netlify.app",
+    ], // Make sure this matches your frontend URL
     credentials: true,
   })
 );
@@ -39,6 +43,9 @@ mongoose
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use(express.urlencoded({ extended: true }));
+
+app.use("/uploads", express.static("uploads"));
 
 // Handling the Port Issue: If the default port is taken, try another
 const PORT = process.env.PORT || 5000;

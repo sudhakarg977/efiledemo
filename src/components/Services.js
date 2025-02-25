@@ -13,7 +13,7 @@ import IdentificationForm from "../forms/IdentificationForm";
 import AddressForm from "../forms/AddressForm";
 import ResidentialStatusForm from "../forms/ResidentialStatusForm";
 import { form } from "framer-motion/client";
-
+import Banner from "./Banner";
 const Services = () => {
   const pricingPlans = [
     {
@@ -77,8 +77,9 @@ const Services = () => {
   return (
     <div className="w-full min-h-screen bg-gray-100 text-gray-900">
       <Navbar />
+      <Banner />
       {/* Work Process Section */}
-      <section className="py-16 px-4">
+      <section className="py-16 px-4 relative">
         <div className="text-center">
           <h2 className="text-4xl font-bold text-gray-800">Work Process</h2>
           <p className="text-teal-600 text-lg font-semibold mt-2">
@@ -86,7 +87,17 @@ const Services = () => {
           </p>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-14 mt-12">
+        {/* Background Image Applied Here */}
+        <div
+          className="relative flex flex-wrap justify-center gap-14 mt-12 bg-cover bg-center bg-no-repeat "
+          style={{
+            backgroundImage: "url('/bg-line.png')",
+            backgroundSize: "contain", // Ensures the image fits between the cards
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "bottom", // Positions in the center of the container
+            marginBottom: "100px",
+          }}
+        >
           {[
             {
               icon: "fas fa-calculator",
@@ -123,6 +134,7 @@ const Services = () => {
           ))}
         </div>
       </section>
+
       <section className="bg-white p-12 text-center relative">
         <div className="flex justify-between items-start w-full">
           {/* Left Content */}

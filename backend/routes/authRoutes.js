@@ -9,6 +9,10 @@ import passport from "passport";
 dotenv.config();
 
 import { OAuth2Client } from "google-auth-library";
+import multer from "multer";
+import path from "path";
+import fs from "fs";
+import { fileURLToPath } from "url";
 
 const router = express.Router();
 
@@ -126,6 +130,62 @@ router.post("/google-login", async (req, res) => {
     console.error("Google verification error:", error);
     res.status(500).json({ message: "Google authentication failed" });
   }
+});
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/"); // Save files in 'uploads' directory
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname)); // Unique file name
+  },
+});
+
+const upload = multer({ storage });
+router.post("/upload", upload.single("file"), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: "No file uploaded" });
+  }
+  res.json({
+    fileName: req.file.filename,
+    filePath: `/uploads/${req.file.filename}`,
+  });
+});
+
+router.get("/uploads", (req, res) => {
+  fs.readdir("uploads", (err, files) => {
+    if (err) return res.status(500).json({ message: "Error fetching files" });
+
+    const fileList = files.map((file) => ({
+      fileName: file,
+      filePath: `/uploads/${file}`,
+    }));
+    res.json(fileList);
+  });
+});
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+// Route to get list of uploaded files
+router.get("/files", (req, res) => {
+  const uploadDir = path.join(__dirname, "../uploads");
+  // Path to the uploads folder
+
+  // Read the directory to get the list of files
+  fs.readdir(uploadDir, (err, files) => {
+    if (err) {
+      return res
+        .status(500)
+        .json({ message: "Unable to read files", error: err.message });
+    }
+
+    // Create file list with names and URLs
+    const fileList = files.map((file) => ({
+      name: file,
+      url: `/uploads/${file}`, // Public URL to access the file
+    }));
+
+    res.json(fileList);
+  });
 });
 
 export default router;
