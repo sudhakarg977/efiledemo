@@ -4,8 +4,6 @@ import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import nodemailer from "nodemailer";
-import crypto from "crypto";
-import passport from "passport";
 dotenv.config();
 
 import { OAuth2Client } from "google-auth-library";

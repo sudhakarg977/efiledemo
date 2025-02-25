@@ -20,11 +20,14 @@ export default function Signup() {
 
   useEffect(() => {
     const handleGoogleResponse = async (response) => {
-      const res = await fetch("http://localhost:5000/api/auth/google-login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tokenId: response.credential }),
-      });
+      const res = await fetch(
+        "https://efiledemo-3.onrender.com/api/auth/google-login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ tokenId: response.credential }),
+        }
+      );
       const data = await res.json();
       console.log(data);
       alert("Google Login Successful!");
@@ -54,8 +57,8 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const url = isLogin
-      ? "http://localhost:5000/api/auth/login"
-      : "http://localhost:5000/api/auth/signup";
+      ? "https://efiledemo-3.onrender.com/api/auth/login"
+      : "https://efiledemo-3.onrender.com/api/auth/signup";
     const dataToSend = isLogin
       ? { email: formData.email, password: formData.password }
       : formData;
