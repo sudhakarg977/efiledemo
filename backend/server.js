@@ -14,7 +14,11 @@ const app = express();
 // Middleware
 app.use(
   cors({
-    origin: ["http://localhost:3000"], // Make sure this matches your frontend URL
+    origin: [
+      "http://localhost:3000",
+      "https://efiledemo-sudhakars-projects-422a99c0.vercel.app",
+    ],
+    // Make sure this matches your frontend URL
     credentials: true,
   })
 );
