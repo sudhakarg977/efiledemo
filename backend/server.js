@@ -14,10 +14,7 @@ const app = express();
 // Middleware
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "https://lambent-truffle-fecc13.netlify.app",
-    ], // Make sure this matches your frontend URL
+    origin: ["http://localhost:3000"], // Make sure this matches your frontend URL
     credentials: true,
   })
 );
@@ -37,7 +34,10 @@ app.use((req, res, next) => {
 
 // Connect to MongoDB
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(process.env.MONGO_URI, {
+    serverSelectionTimeoutMS: 30000, // Increase timeout
+    connectTimeoutMS: 30000,
+  })
   .then(() => console.log("✅ MongoDB Connected"))
   .catch((err) => console.log("❌ DB Connection Error:", err));
 
@@ -46,6 +46,22 @@ app.use("/api/auth", authRoutes);
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/uploads", express.static("uploads"));
+
+app.get("/api/db-check", async (req, res) => {
+  try {
+    const isConnected = mongoose.connection.readyState;
+    if (isConnected === 1) {
+      res.json({ status: "MongoDB Connected" });
+    } else {
+      res.json({ status: "MongoDB Not Connected" });
+    }
+  } catch (error) {
+    res.json({ status: "Error checking MongoDB", error });
+  }
+});
+app.get("/api/health", (req, res) => {
+  res.json({ status: "Backend is running" });
+});
 
 // Handling the Port Issue: If the default port is taken, try another
 const PORT = process.env.PORT || 5000;
