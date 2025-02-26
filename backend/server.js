@@ -17,7 +17,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "https://efiledemo-sudhakars-projects-422a99c0.vercel.app",
-      "https://efiledemo.vercel.app/",
+      "https://efiledemo.vercel.app",
     ],
     // Make sure this matches your frontend URL
     credentials: true,
