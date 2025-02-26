@@ -17,6 +17,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "https://efiledemo-sudhakars-projects-422a99c0.vercel.app",
+      "https://efiledemo.vercel.app/",
     ],
     // Make sure this matches your frontend URL
     credentials: true,
@@ -68,7 +69,7 @@ app.get("/api/health", (req, res) => {
 });
 
 // Handling the Port Issue: If the default port is taken, try another
-const PORT = process.env.PORT || 10000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, (err) => {
   if (err) {
