@@ -38,7 +38,7 @@ const Navbar = () => {
                 href="#"
                 className="block px-4 py-2 hover:bg-teal-500 hover:text-white"
               >
-                Single Service
+                ITR services
               </a>
             </li>
             <li>
@@ -46,7 +46,15 @@ const Navbar = () => {
                 href="#"
                 className="block px-4 py-2 hover:bg-teal-500 hover:text-white"
               >
-                Pricing Plan
+                GST services
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="block px-4 py-2 hover:bg-teal-500 hover:text-white"
+              >
+                ROC filing
               </a>
             </li>
           </ul>
@@ -74,7 +82,13 @@ const Navbar = () => {
             </button>
           </Link>
         ) : location.pathname === "/services" ? (
-          <FaUserCircle className="text-teal-600 text-3xl" />
+          <div className="w-12 h-12 rounded-full overflow-hidden mr-10">
+            <img
+              src="https://randomuser.me/api/portraits/women/44.jpg"
+              alt="User"
+              className="w-full h-full object-cover"
+            />
+          </div>
         ) : (
           // Show Get Started button on other pages
           <Link to="/signup">

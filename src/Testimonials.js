@@ -38,20 +38,21 @@ const testimonials = [
   },
 ];
 
-export default function Testy() {
+export default function Testimonials() {
   return (
-    <section className="bg-white py-16">
-      <div className="max-w-7xl mx-auto text-center">
-        {/* Title */}
-        <h4 className="text-teal-500 text-lg font-semibold">Testimonials</h4>
-        <h2 className="text-5xl font-bold text-gray-900 mt-2">
-          What Our Clients Say
-        </h2>
+    <section className="bg-white py-16 text-center">
+      {/* Title */}
+      <h4 className="text-teal-500 text-lg font-semibold">Testimonials</h4>
+      <h2 className="text-5xl font-bold text-gray-900 mt-2">
+        What Our Clients Say
+      </h2>
 
-        {/* Swiper Carousel */}
-        <div className="mt-6">
+      {/* Swiper Navigation Buttons (Outside) */}
+      <div className="relative flex justify-center items-center mt-6">
+        <div className="w-full max-w-6xl mx-auto px-4">
+          {/* Swiper Carousel */}
           <Swiper
-            spaceBetween={50}
+            spaceBetween={20}
             slidesPerView={1}
             breakpoints={{
               768: { slidesPerView: 2 },
@@ -67,7 +68,7 @@ export default function Testy() {
           >
             {testimonials.map((testimonial, index) => (
               <SwiperSlide key={index}>
-                <div className="bg-gray-100 rounded-xl shadow-lg p-6 text-gray-700 mx-auto max-w-md">
+                <div className="bg-gray-100 rounded-xl shadow-lg p-6 text-gray-700 mx-4">
                   <p className="text-lg italic">
                     {testimonial.text.length > 100
                       ? `${testimonial.text.substring(0, 100)}...`

@@ -1,54 +1,76 @@
-import React from "react";
+import { useState } from "react";
 import {
-  BiBookAlt,
-  BiCalendarCheck,
-  BiHome,
-  BiPen,
-  BiSolidUserCheck,
-  BiTask,
-} from "react-icons/bi";
+  FaTachometerAlt,
+  FaUsers,
+  FaDotCircle,
+  FaClock,
+  FaCheckCircle,
+  FaSignOutAlt,
+} from "react-icons/fa";
 
-const Slidebar = () => {
+const Sidebar = ({ setActiveSection }) => {
   return (
-    <div className="flex flex-col gap-10 p-4 bg-black h-screen w-72 hidden md:flex">
-      {/* Logo Section */}
-      <div className="flex items-center gap-4  text-lg font-bold">
-        <img src="Color version.svg" alt="logo" className="w-34 h-34 pt-3" />
+    <div className="h-screen w-64 bg-gray-900 text-white flex flex-col">
+      {/* Logo */}
+      <div className="p-5 text-center border-b border-gray-700 flex items-center justify-center">
+        <img
+          src="/Color version.svg"
+          alt="efiletax Logo"
+          className="h-10 w-auto"
+        />
+        <h1 className="text-lg font-bold ml-2"></h1>
       </div>
 
-      {/* Menu Items */}
-      <div className="flex flex-col gap-5 text-white">
-        <a
-          href="#"
-          className="flex items-center gap-4 text-lg font-medium text-white-800 p-3 rounded-lg hover:bg-[#3bc7cc] hover:text-white transition"
-        >
-          <BiHome className="text-2xl text-gray-400" />
-          Dashboard
-        </a>
-        <a
-          href="#"
-          className="flex items-center gap-4 text-lg font-medium text-white-800 p-3 rounded-lg hover:bg-[#3bc7cc] hover:text-white transition"
-        >
-          <BiPen className="text-2xl text-gray-400" />
-          Pending
-        </a>
-        <a
-          href="#"
-          className="flex items-center gap-4 text-lg font-medium text-white-800 p-3 rounded-lg hover:bg-[#3bc7cc] hover:text-white transition"
-        >
-          <BiSolidUserCheck className="text-2xl text-gray-400" />
-          Successful
-        </a>
-        <a
-          href="#"
-          className="flex items-center gap-4 text-lg font-medium text-white-800 p-3 rounded-lg hover:bg-[#3bc7cc] hover:text-white transition"
-        >
-          <BiTask className="text-2xl text-gray-400" />
-          Contact
-        </a>
+      {/* Navigation Links */}
+      <nav className="flex-1 px-4 py-6">
+        <ul className="space-y-4">
+          <li
+            className="flex items-center p-2 hover:bg-gray-700 rounded-lg cursor-pointer"
+            onClick={() => setActiveSection("dashboard")}
+          >
+            <FaTachometerAlt className="mr-3" />
+            Dashboard
+          </li>
+          <li
+            className="flex items-center p-2 bg-teal-600 hover:bg-gray-700 rounded-lg cursor-pointer"
+            onClick={() => setActiveSection("users")}
+          >
+            <FaUsers className="mr-3" />
+            Users List
+          </li>
+          <li
+            className="flex items-center p-2 hover:bg-gray-700 rounded-lg cursor-pointer"
+            onClick={() => setActiveSection("status")}
+          >
+            <FaDotCircle className="mr-3" />
+            Status
+          </li>
+          <li
+            className="flex items-center p-2 hover:bg-gray-700 rounded-lg cursor-pointer"
+            onClick={() => setActiveSection("pending")}
+          >
+            <FaClock className="mr-3" />
+            Pending
+          </li>
+          <li
+            className="flex items-center p-2 hover:bg-gray-700 rounded-lg cursor-pointer"
+            onClick={() => setActiveSection("successful")}
+          >
+            <FaCheckCircle className="mr-3" />
+            Successful
+          </li>
+        </ul>
+      </nav>
+
+      {/* Logout Button */}
+      <div className="p-4 border-t border-gray-700">
+        <button className="flex items-center w-full p-2 hover:bg-gray-700 rounded-lg">
+          <FaSignOutAlt className="mr-3" />
+          Logout
+        </button>
       </div>
     </div>
   );
 };
 
-export default Slidebar;
+export default Sidebar;

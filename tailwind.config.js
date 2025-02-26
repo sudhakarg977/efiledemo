@@ -4,7 +4,7 @@ export const content = ["./src/**/*.{js,jsx,ts,tsx}"];
 export const theme = {
   extend: {
     fontFamily: {
-      sans: ["Poppins", "sans-serif"],
+      sans: ["Poppins", "sans-serif", "Nunito Sans"],
     },
     colors: {
       customTeal: "#0d9488",

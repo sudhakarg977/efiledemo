@@ -1,6 +1,7 @@
 import React, { use } from "react";
 import { useState, useEffect } from "react";
 import { BiNotification, BiSearch, BiBell, BiUser } from "react-icons/bi";
+import { FaBell, FaEnvelope, FaCog, FaMoon, FaSun } from "react-icons/fa";
 
 import UploadedFilesList from "./UploadedFilesList";
 
@@ -93,79 +94,77 @@ const ContentHeader = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [editedComment, setEditedComment] = useState(rows.Comments);
   const [editedStatus, setEditedStatus] = useState("false");
-  const [darkMode, setDarkMode] = useState(
-    localStorage.getItem("theme") === "dark"
-  );
+  const [darkMode, setDarkMode] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  }, [darkMode]);
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    document.documentElement.classList.toggle("dark"); // Toggles dark mode on the HTML root
+  };
+
+  // useEffect(() => {
+  //   if (darkMode) {
+  //     document.documentElement.classList.add("dark");
+  //     localStorage.setItem("theme", "dark");
+  //   } else {
+  //     document.documentElement.classList.remove("dark");
+  //     localStorage.setItem("theme", "light");
+  //   }
+  // }, [darkMode]);
   return (
     <>
-      <div className=" sticky top-0 z-50 w-full flex justify-between items-center px-6 py-4 bg-white shadow-md">
-        {/* Dashboard Title */}
-        <h1 className="text-2xl font-semibold text-gray-800">Dashboard</h1>
+      <div className="flex items-center justify-between bg-white dark:bg-gray-900 p-4 shadow-md">
+        {/* Breadcrumb */}
+        <div className="text-gray-700 dark:text-gray-300">
+          <span className="text-sm">Home / </span>
+          <span className="text-sm font-semibold text-gray-900 dark:text-white">
+            Dashboard
+          </span>
+        </div>
 
-        {/* Header Actions */}
-        <div className="flex items-center gap-6">
-          {/* Search Box */}
-          <div className="flex items-center bg-gray-200 px-4 py-2 rounded-lg">
-            <input
-              type="text"
-              placeholder="Search here"
-              className="bg-transparent outline-none text-gray-700 placeholder-gray-500"
-            />
-            <BiSearch className="w-5 h-5 text-gray-500 cursor-pointer" />
-          </div>
-
-          {/* Notification Icon */}
-          <div className="relative p-2 rounded-full bg-gray-100 hover:bg-gray-200 cursor-pointer">
-            <BiBell className="w-6 h-6 text-gray-700" />
-            {/* Notification Badge */}
-            <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></span>
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setDarkMode(!darkMode)}
-              className="p-2 bg-gray-200 dark:bg-gray-800 text-black dark:text-white rounded"
-            >
-              {darkMode ? "Light Mode" : "Dark Mode"}
-            </button>
-          </div>
-
-          {/* Profile Icon with Dropdown */}
+        {/* Right Side Icons & Profile */}
+        <div className="flex items-center space-x-6 relative pr-4">
+          <FaBell className="text-gray-600 dark:text-gray-300 cursor-pointer hover:text-gray-900 dark:hover:text-white" />
+          <FaEnvelope className="text-gray-600 dark:text-gray-300 cursor-pointer hover:text-gray-900 dark:hover:text-white" />
+          <FaCog className="text-gray-600 dark:text-gray-300 cursor-pointer hover:text-gray-900 dark:hover:text-white" />
+          <div className="w-px h-6 bg-gray-300 dark:bg-gray-600"></div>
+          {/* Dropdown */}
           <div className="relative">
-            <div
-              className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 cursor-pointer"
-              onClick={() => setIsProfileOpen(!isProfileOpen)}
+            <button
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+              className="focus:outline-none"
             >
-              <BiUser className="w-6 h-6 text-gray-700" />
-            </div>
-
-            {isProfileOpen && (
-              <div className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-lg">
-                <ul className="text-gray-700">
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                    Profile
-                  </li>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                    Settings
-                  </li>
-                  <li
-                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer border-t"
-                    onClick={() => alert("Logged out")}
-                  >
-                    Logout
-                  </li>
-                </ul>
+              {darkMode ? (
+                <FaSun className="text-yellow-500 cursor-pointer hover:text-yellow-600" />
+              ) : (
+                <FaMoon className="text-gray-600 dark:text-gray-300 cursor-pointer hover:text-gray-900 dark:hover:text-white" />
+              )}
+            </button>
+            {dropdownOpen && (
+              <div className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 shadow-md rounded-md py-2">
+                <button
+                  onClick={toggleDarkMode}
+                  className="flex items-center px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 w-full"
+                >
+                  {darkMode ? (
+                    <FaSun className="mr-2 text-yellow-500" />
+                  ) : (
+                    <FaMoon className="mr-2 text-gray-600 dark:text-gray-300" />
+                  )}
+                  {darkMode ? "Light Mode" : "Dark Mode"}
+                </button>
               </div>
             )}
+          </div>
+          <div className="w-px h-6 bg-gray-300 dark:bg-gray-600"></div>
+
+          {/* Profile */}
+          <div className="w-12 h-12 rounded-full overflow-hidden">
+            <img
+              src="https://randomuser.me/api/portraits/women/44.jpg"
+              alt="User"
+              className="w-full h-full object-cover"
+            />
           </div>
         </div>
       </div>

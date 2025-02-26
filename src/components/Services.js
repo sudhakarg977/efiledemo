@@ -8,7 +8,7 @@ import {
   ExclamationCircleIcon,
 } from "@heroicons/react/24/outline";
 
-import PermanentInformationForm from "../forms/ PermanentInformationForm";
+import PermanentInformationForm from "../forms/PermanentInformationForm";
 import IdentificationForm from "../forms/IdentificationForm";
 import AddressForm from "../forms/AddressForm";
 import ResidentialStatusForm from "../forms/ResidentialStatusForm";

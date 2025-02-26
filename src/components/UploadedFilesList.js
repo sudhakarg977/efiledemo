@@ -8,7 +8,7 @@ const UploadedFilesList = () => {
     const fetchFiles = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/auth/files"
+          "https://efiledemo-3.onrender.com/api/auth/files"
         );
         setFiles(response.data);
       } catch (error) {
@@ -32,7 +32,7 @@ const UploadedFilesList = () => {
               className="flex items-center space-x-4 p-2 border rounded"
             >
               <a
-                href={`http://localhost:5000${file.url}`}
+                href={`https://efiledemo-3.onrender.com${file.url}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:underline"

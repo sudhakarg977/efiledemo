@@ -33,7 +33,7 @@ const FAQ = () => {
 
   return (
     <section className="bg-gray-100 p-10 rounded-lg">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
         {/* Left Section - Headings */}
         <div className="text-left">
           <h2 className="text-[#20b2aa] text-4xl font-semibold">FAQ</h2>
