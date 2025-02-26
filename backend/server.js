@@ -69,7 +69,7 @@ app.get("/api/health", (req, res) => {
 });
 
 // Handling the Port Issue: If the default port is taken, try another
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 10000;
 
 app.listen(PORT, (err) => {
   if (err) {

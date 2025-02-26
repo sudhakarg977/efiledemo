@@ -201,7 +201,7 @@ const Homepage = () => {
 
           {/* Right Form */}
           <div className="flex-1 pl-0 md:pl-5 mt-8 md:mt-0">
-            <div className="p-6  bg-opacity-90 rounded-lg  animate-slideInRight">
+            <div className="p-6  bg-opacity-90 rounded-lg shadow-md animate-slideInRight">
               <form>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <input
