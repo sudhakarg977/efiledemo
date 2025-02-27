@@ -7,6 +7,9 @@ import {
   ChevronDownIcon,
   ExclamationCircleIcon,
 } from "@heroicons/react/24/outline";
+import { BanknotesIcon } from "@heroicons/react/24/solid";
+import { FaUniversity, FaChartLine } from "react-icons/fa";
+import { MdSavings, MdAccountBalance } from "react-icons/md";
 
 import PermanentInformationForm from "../forms/PermanentInformationForm";
 import IdentificationForm from "../forms/IdentificationForm";
@@ -215,6 +218,42 @@ const Services = () => {
                   description:
                     "The residential status depends on the number of days you stayed in India. Please follow the process to choose ",
                   icon: <HomeIcon className="w-6 h-6 text-purple-600" />,
+                  bgColor: "bg-purple-100",
+                  form: <ResidentialStatusForm />,
+                },
+                {
+                  id: "residentialStatus",
+                  title: "Contact",
+                  description:
+                    "The residential status depends on the number of days you stayed in India. Please follow the process to choose ",
+                  icon: <HomeIcon className="w-6 h-6 text-purple-600" />,
+                  bgColor: "bg-purple-100",
+                  form: <ResidentialStatusForm />,
+                },
+                {
+                  id: "residentialStatus",
+                  title: "80C investment details",
+                  description:
+                    "The residential status depends on the number of days you stayed in India. Please follow the process to choose ",
+                  icon: <BanknotesIcon className="w-6 h-6 text-purple-600" />,
+                  bgColor: "bg-purple-100",
+                  form: <ResidentialStatusForm />,
+                },
+                {
+                  id: "residentialStatus",
+                  title: "Bank, FD, RD. Savings interest certificate",
+                  description:
+                    "The residential status depends on the number of days you stayed in India. Please follow the process to choose ",
+                  icon: <MdSavings className="w-6 h-6 text-purple-600" />,
+                  bgColor: "bg-purple-100",
+                  form: <ResidentialStatusForm />,
+                },
+                {
+                  id: "residentialStatus",
+                  title: "Demat account CG gain statement if available",
+                  description:
+                    "The residential status depends on the number of days you stayed in India. Please follow the process to choose ",
+                  icon: <FaChartLine className="w-6 h-6 text-purple-600" />,
                   bgColor: "bg-purple-100",
                   form: <ResidentialStatusForm />,
                 },

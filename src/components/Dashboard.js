@@ -33,6 +33,46 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { MdCreditCard } from "react-icons/md";
+const data = [
+  { value: 20 },
+  { value: 40 },
+  { value: 30 },
+  { value: 50 },
+  { value: 45 },
+  { value: 60 },
+  { value: 55 },
+];
+
+const stats = [
+  {
+    title: "Users",
+    value: "26K",
+    change: "-12.4%",
+    color: "bg-green-600",
+    graphColor: "#34D399",
+  },
+  {
+    title: "Income",
+    value: "$6,200",
+    change: "40.9%",
+    color: "bg-blue-500",
+    graphColor: "#3B82F6",
+  },
+  {
+    title: "Conversion Rate",
+    value: "2.49%",
+    change: "84.7%",
+    color: "bg-yellow-500",
+    graphColor: "#FACC15",
+  },
+  {
+    title: "Sessions",
+    value: "44K",
+    change: "-23.6%",
+    color: "bg-red-500",
+    graphColor: "#EF4444",
+  },
+];
 
 // Dummy Data
 const userData = [
@@ -281,41 +321,42 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Dashboard Cards */}
-        <section className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4">
-          {[
-            {
-              title: "Users",
-              value: "26K",
-              change: "-12.4%",
-              color: "bg-green-600",
-            },
-            {
-              title: "Income",
-              value: "$6,200",
-              change: "40.9%",
-              color: "bg-blue-500",
-            },
-            {
-              title: "Conversion Rate",
-              value: "2.49%",
-              change: "84.7%",
-              color: "bg-yellow-500",
-            },
-            {
-              title: "Sessions",
-              value: "44K",
-              change: "-23.6%",
-              color: "bg-red-500",
-            },
-          ].map((card, index) => (
+        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
+          {stats.map((card, index) => (
             <div
               key={index}
-              className={`${card.color} text-white p-4 rounded-lg shadow-md`}
+              className="bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-5 flex flex-col justify-between"
             >
-              <h2 className="text-lg font-semibold">{card.value}</h2>
-              <p className="text-sm">{card.title}</p>
-              <p className="text-xs">{card.change}</p>
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  {card.value}
+                </h2>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  {card.title}
+                </p>
+              </div>
+
+              <div className="h-14">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={data}>
+                    <Line
+                      type="monotone"
+                      dataKey="value"
+                      stroke={card.graphColor}
+                      strokeWidth={2}
+                      dot={false}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+
+              <p
+                className={`text-sm font-semibold ${
+                  card.change.includes("-") ? "text-red-500" : "text-green-500"
+                }`}
+              >
+                {card.change}
+              </p>
             </div>
           ))}
         </section>
