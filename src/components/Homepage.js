@@ -84,7 +84,7 @@ const Homepage = () => {
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <motion.a
-              href="signup.html"
+              href="/signup"
               className="bg-[#20b2aa] text-white px-6 py-3 rounded-md font-semibold transition hover:bg-[#1e9e96]"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -93,7 +93,7 @@ const Homepage = () => {
             </motion.a>
 
             <motion.a
-              href="signup.html"
+              href="/signup"
               className="bg-[#20b2aa] text-white px-6 py-3 rounded-md font-semibold transition hover:bg-[#1e9e96]"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -253,23 +253,23 @@ const Homepage = () => {
       </section>
 
       <section className="bg-teal-500 text-white py-24 px-12 text-center relative">
-        <h1 className="text-5xl font-semibold uppercase tracking-wide mb-6 font-sans">
+        <h1 className="text-3xl font-extrabold uppercase tracking-wider mb-8 font-playfair leading-tight text-white drop-shadow-lg">
           What's the necessity?
         </h1>
         <div className="flex flex-col md:flex-row items-center justify-center gap-24">
-          <div className="text-xl font-semibold text-white font-serif text-center">
+          <div className="text-2xl font-semibold font-inter text-center">
             Income Tax, GST <br /> & ROC Filing
           </div>
           <div className="w-px h-16 bg-teal-200"></div>
-          <div className="text-lg font-semibold text-white font-serif text-center">
+          <div className="text-lg font-medium font-inter text-center">
             Let us understand our tax
           </div>
           <div className="w-px h-16 bg-teal-200"></div>
-          {/* Button placed in a separate flex-col div to appear vertically aligned */}
+          {/* Button */}
           <div className="flex flex-col items-center">
             <a
               href="#"
-              className="bg-white text-teal-600 px-6 py-2 rounded-lg text-l font-semibold shadow-md hover:bg-teal-700 hover:text-white transition"
+              className="bg-white text-teal-600 px-6 py-2 rounded-lg text-lg font-semibold font-dmSans shadow-md hover:bg-teal-700 hover:text-white transition"
             >
               Discover More
             </a>
