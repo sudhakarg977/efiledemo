@@ -33,7 +33,7 @@ const Sidebar = ({ setActiveTab }) => {
                   ? item.id === "dashboard"
                     ? "bg-blue-600" // Default background color for Dashboard
                     : "bg-teal-600"
-                  : "hover:bg-gray-700"
+                  : "hover:bg-teal-700"
               }`}
               onClick={() => setActiveTab(item.id)}
             >
