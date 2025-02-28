@@ -2,6 +2,8 @@ import express from "express";
 
 import Upload from "../models/Upload.js";
 
+
+
 import dotenv from "dotenv";
 import path from "path";
 import fs from "fs";
@@ -10,6 +12,9 @@ dotenv.config();
 import multer from "multer";
 
 const router = express.Router();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const uploadPath = path.join(__dirname, "uploads");
 if (!fs.existsSync(uploadPath)) {
