@@ -3,6 +3,8 @@ import express from "express";
 import Upload from "../models/Upload.js";
 
 import dotenv from "dotenv";
+import path from "path";
+import fs from "fs";
 
 dotenv.config();
 import multer from "multer";
