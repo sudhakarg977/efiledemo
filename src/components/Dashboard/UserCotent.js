@@ -80,7 +80,7 @@ const UserCotent = () => {
                   <td className="py-3 px-5 flex space-x-3">
                     {/* View File Icon */}
                     <a
-                      href={`http://localhost:5000/${upload.filePath}`}
+                      href={`https://efiledemo-3.onrender.com/${upload.filePath}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-600 hover:text-blue-800"
@@ -90,7 +90,7 @@ const UserCotent = () => {
 
                     {/* Download File Button */}
                     <a
-                      href={`http://localhost:5000/${upload.filePath}`}
+                      href={`https://efiledemo-3.onrender.com/${upload.filePath}`}
                       download
                       className="text-green-600 hover:text-green-800"
                     >
