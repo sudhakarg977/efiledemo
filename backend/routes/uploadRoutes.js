@@ -9,6 +9,11 @@ import multer from "multer";
 
 const router = express.Router();
 
+const uploadPath = path.join(__dirname, "uploads");
+if (!fs.existsSync(uploadPath)) {
+  fs.mkdirSync(uploadPath, { recursive: true });
+}
+
 // Multer Storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
