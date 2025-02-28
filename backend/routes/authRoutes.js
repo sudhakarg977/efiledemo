@@ -80,7 +80,8 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    res.json({ message: "Login successful", token });
+
+    res.json({ message: "Login successful", token, user });
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }
@@ -123,7 +124,7 @@ router.post("/google-login", async (req, res) => {
       await sendWelcomeEmail(email, name);
     }
 
-    res.json({ token, user: { fullName: user.fullName, email: user.email } });
+    res.json({ token, user });
   } catch (error) {
     console.error("Google verification error:", error);
     res.status(500).json({ message: "Google authentication failed" });

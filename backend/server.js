@@ -9,7 +9,7 @@ import passport from "passport";
 import "./config/passport.js";
 import path from "path";
 import { fileURLToPath } from "url";
-import fs from "fs";
+import uploadRoutes from "./routes/uploadRoutes.js";
 
 const app = express();
 
@@ -50,6 +50,7 @@ mongoose
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/upload", uploadRoutes);
 app.use(express.urlencoded({ extended: true }));
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

@@ -1,44 +1,66 @@
 import React, { useState } from "react";
-import axios from "axios";
 
 const PermanentInformationForm = () => {
+  const userData = JSON.parse(localStorage.getItem("user")) || {};
   const [file, setFile] = useState(null);
-  const [fileUrl, setFileUrl] = useState(null);
+  const [fileUrl, setFileUrl] = useState(""); // ✅ Added state for file URL
+  const [formData, setFormData] = useState({
+    id: parseInt(userData._id, 10),
+    name: userData.fullName || "",
+    taxservice: "GST filing",
+    paymentstatus: "Incompleted",
+    status: "open",
+    comments: "",
+  });
+
+  const handleChange = (e) => {
+    ``;
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile) {
-      setFile(selectedFile);
-      setFileUrl(URL.createObjectURL(selectedFile)); // Preview the file locally
+    setFile(e.target.files[0]);
+  };
+
+  const uploadFile = async (formDataToSend) => {
+    try {
+      const response = await fetch(
+        "https://efiledemo-3.onrender.com/api/upload/upload",
+        {
+          method: "POST",
+          body: formDataToSend,
+        }
+      );
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      return { error: "File upload failed!" };
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!file) {
-      alert("Please select a file");
+      alert("Please select a file to upload!");
       return;
     }
 
-    const formData = new FormData();
-    formData.append("file", file);
+    const formDataToSend = new FormData();
+    Object.keys(formData).forEach((key) => {
+      formDataToSend.append(key, formData[key]);
+    });
+    formDataToSend.append("file", file);
 
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/upload",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+    const response = await uploadFile(formDataToSend);
 
-      setFileUrl(response.data.fileUrl); // Store the uploaded file URL from the server
-      alert("File uploaded successfully");
-    } catch (error) {
-      console.error("File upload error:", error);
-      alert("File upload failed");
+    if (response.error) {
+      alert(response.error);
+    } else {
+      alert("File uploaded successfully!");
+      setFileUrl(response.filePath); // ✅ Set the uploaded file URL
     }
   };
 

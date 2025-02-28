@@ -11,6 +11,7 @@ import { useState } from "react";
 import Sidebar from "./components/Dashboard/Sidebar";
 import Navbar from "./components/Dashboard/Navbar";
 import ContactUs from "./components/Dashboard/ContactUs";
+import { ToastContainer } from "react-toastify";
 
 function AdminLayout() {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -36,23 +37,26 @@ function AdminLayout() {
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<Homepage />} />
-        <Route path="/Homepage" element={<Homepage />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<SignUp />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/contact" element={<ContactUs />} />
+    <>
+      <ToastContainer />
+      <Router>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<Homepage />} />
+          <Route path="/Homepage" element={<Homepage />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<SignUp />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/contact" element={<ContactUs />} />
 
-        {/* Admin Routes */}
-        <Route path="/admin" element={<AdminLayout />} />
+          {/* Admin Routes */}
+          <Route path="/admin" element={<AdminLayout />} />
 
-        {/* 404 Page (Optional) */}
-        {/* <Route path="*" element={<h1>Not Found</h1>} /> */}
-      </Routes>
-    </Router>
+          {/* 404 Page (Optional) */}
+          {/* <Route path="*" element={<h1>Not Found</h1>} /> */}
+        </Routes>
+      </Router>
+    </>
   );
 }
 

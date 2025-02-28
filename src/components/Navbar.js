@@ -1,26 +1,43 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { FaUserCircle, FaBell } from "react-icons/fa";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import {
+  FaUserCircle,
+  FaBell,
+  FaChevronDown,
+  FaChevronUp,
+} from "react-icons/fa";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isLogoutDropdownOpen, setIsLogoutDropdownOpen] = useState(false);
+  const [user, setUser] = useState(null);
   const dropdownRef = useRef(null);
-  const location = useLocation();
 
-  // Close dropdown if clicked outside
+  const navigate = useNavigate();
+
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsDropdownOpen(false);
+    // Parse stored user data
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        setUser(JSON.parse(storedUser)); // Parse JSON user data
+      } catch (error) {
+        console.error("Error parsing user data:", error);
+        setUser(null);
       }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    }
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user"); // Clear user from storage
+    setUser(null); // Update state to reflect UI change
+    toast.success("Logged out successfully!", {
+      position: "top-right",
+      autoClose: 3000,
+    });
+  };
 
   return (
     <nav className="absolute top-0 left-0 w-full py-4 px-6 flex items-center justify-between z-50 border border-gray-200 bg-white shadow-md">
@@ -29,7 +46,7 @@ const Navbar = () => {
         <img src="Color version.svg" alt="Logo" className="h-10" />
       </a>
 
-      {/* Navigation Menu */}
+      {/* Menu */}
       <ul className="hidden md:flex space-x-8 text-customTeal mx-auto">
         <li>
           <a href="/Homepage" className="hover:text-teal-400">
@@ -41,8 +58,6 @@ const Navbar = () => {
             About Us
           </a>
         </li>
-
-        {/* Clickable Services Dropdown */}
         <li className="relative" ref={dropdownRef}>
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -52,115 +67,112 @@ const Navbar = () => {
           </button>
 
           {/* Dropdown Menu */}
-          <div
-            className={`absolute left-0 mt-2 bg-white shadow-lg text-gray-700 w-[600px] rounded-md transition-all duration-300 ease-in-out transform ${
-              isDropdownOpen ? "scale-100 opacity-100" : "scale-95 opacity-0"
-            } origin-top animate-fadeIn p-4`}
-          >
-            <div className="grid grid-cols-3 gap-6">
-              {/* Section 1: Tax & Compliance */}
-              <div>
-                <h3 className="font-semibold text-teal-600 mb-2">GST filing</h3>
-                <ul>
-                  <li>
-                    <a
-                      href="/services"
-                      className="block px-4 py-2 hover:bg-teal-500 hover:text-white"
-                    >
-                      ITR Filing
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 hover:bg-teal-500 hover:text-white"
-                    >
-                      GST Registration
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 hover:bg-teal-500 hover:text-white"
-                    >
-                      TDS Filing
-                    </a>
-                  </li>
-                </ul>
-              </div>
+          {isDropdownOpen && (
+            <div className="absolute left-0 mt-2 bg-white shadow-lg text-gray-700 w-[600px] rounded-md transition-all duration-300 ease-in-out transform scale-100 opacity-100 origin-top animate-fadeIn p-4">
+              <div className="grid grid-cols-3 gap-6">
+                {/* Section 1: Tax & Compliance */}
+                <div>
+                  <h3 className="font-semibold text-teal-600 mb-2">
+                    GST filing
+                  </h3>
+                  <ul>
+                    <li>
+                      <Link
+                        to={user ? "/services" : "/signup"}
+                        className="block px-4 py-2 hover:bg-teal-500 hover:text-white"
+                      >
+                        ITR Filing
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to={user ? "/services" : "/signup"}
+                        className="block px-4 py-2 hover:bg-teal-500 hover:text-white"
+                      >
+                        GST Registration
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to={user ? "/services" : "/signup"}
+                        className="block px-4 py-2 hover:bg-teal-500 hover:text-white"
+                      >
+                        TDS Filing
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
 
-              {/* Section 2: Legal & Corporate */}
-              <div>
-                <h3 className="font-semibold text-teal-600 mb-2">ITR Filing</h3>
-                <ul>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 hover:bg-teal-500 hover:text-white"
-                    >
-                      Company Registration
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 hover:bg-teal-500 hover:text-white"
-                    >
-                      Trademark Filing
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 hover:bg-teal-500 hover:text-white"
-                    >
-                      ROC Compliance
-                    </a>
-                  </li>
-                </ul>
-              </div>
+                {/* Section 2: Legal & Corporate */}
+                <div>
+                  <h3 className="font-semibold text-teal-600 mb-2">
+                    ITR Filing
+                  </h3>
+                  <ul>
+                    <li>
+                      <Link
+                        to={user ? "/services" : "/signup"}
+                        className="block px-4 py-2 hover:bg-teal-500 hover:text-white"
+                      >
+                        Company Registration
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to={user ? "/services" : "/signup"}
+                        className="block px-4 py-2 hover:bg-teal-500 hover:text-white"
+                      >
+                        Trademark Filing
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to={user ? "/services" : "/signup"}
+                        className="block px-4 py-2 hover:bg-teal-500 hover:text-white"
+                      >
+                        ROC Compliance
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
 
-              {/* Section 3: Accounting & Finance */}
-              <div>
-                <h3 className="font-semibold text-teal-600 mb-2">
-                  GST Registration
-                </h3>
-                <ul>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 hover:bg-teal-500 hover:text-white"
-                    >
-                      Auditing
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 hover:bg-teal-500 hover:text-white"
-                    >
-                      Bookkeeping
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 hover:bg-teal-500 hover:text-white"
-                    >
-                      Financial Planning
-                    </a>
-                  </li>
-                </ul>
+                {/* Section 3: Accounting & Finance */}
+                <div>
+                  <h3 className="font-semibold text-teal-600 mb-2">
+                    GST Registration
+                  </h3>
+                  <ul>
+                    <li>
+                      <Link
+                        to={user ? "/services" : "/signup"}
+                        className="block px-4 py-2 hover:bg-teal-500 hover:text-white"
+                      >
+                        Auditing
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to={user ? "/services" : "/signup"}
+                        className="block px-4 py-2 hover:bg-teal-500 hover:text-white"
+                      >
+                        Bookkeeping
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to={user ? "/services" : "/signup"}
+                        className="block px-4 py-2 hover:bg-teal-500 hover:text-white"
+                      >
+                        Financial Planning
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </li>
 
-        <li>
-          <a href="#" className="hover:text-teal-400">
-            Portfolio
-          </a>
-        </li>
         <li>
           <a href="/contact" className="hover:text-teal-400">
             Contact Us
@@ -170,9 +182,9 @@ const Navbar = () => {
 
       {/* Profile Section */}
       <div className="cursor-pointer">
-        {location.pathname === "/services" ? (
+        {user ? (
           <div className="relative flex items-center">
-            {/* Notification Icon with Badge */}
+            {/* Notifications */}
             <div className="relative mr-6">
               <FaBell className="text-dark-600 text-3xl cursor-pointer" />
               <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
@@ -180,17 +192,30 @@ const Navbar = () => {
               </span>
             </div>
 
-            {/* User Profile Image */}
-            <div className="w-12 h-12 rounded-full overflow-hidden">
-              <img
-                src="https://randomuser.me/api/portraits/women/44.jpg"
-                alt="User"
-                className="w-full h-full object-cover"
-              />
+            {/* User Profile */}
+            <div className="relative">
+              <button
+                onClick={() => setIsLogoutDropdownOpen(!isLogoutDropdownOpen)}
+                className="flex items-center gap-2 bg-gray-200 px-3 py-2 rounded-lg hover:bg-gray-300 transition-all duration-200"
+              >
+                <FaUserCircle className="text-teal-600 text-3xl" />
+                <span className="text-gray-800">{user.fullName || "User"}</span>
+              </button>
+
+              {/* Logout Dropdown */}
+              {isLogoutDropdownOpen && (
+                <div className="absolute right-0 mt-2 bg-white shadow-md w-40 rounded-md">
+                  <button
+                    onClick={handleLogout}
+                    className="w-full text-left px-4 py-2 text-gray-700 hover:bg-red-500 hover:text-white transition-all duration-200"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         ) : (
-          // Show Get Started button on other pages
           <Link to="/signup">
             <button className="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-400 transition-all duration-200 mr-10">
               Get Started

@@ -34,13 +34,6 @@ const userSchema = new mongoose.Schema(
     documentType: { type: String, trim: true }, // MIME type (e.g., 'image/png', 'application/pdf')
     documentSize: { type: Number }, // File size in bytes
 
-    // Admin Approval Status
-    status: {
-      type: String,
-      enum: ["Pending", "Approved", "Rejected"],
-      default: "Pending",
-    },
-
     // Timestamps
   },
   { timestamps: true } // Auto adds createdAt & updatedAt fields

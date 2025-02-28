@@ -2,8 +2,13 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { FaSpinner } from "react-icons/fa";
+
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Navbar from "./Navbar";
+import Loader from "./Loader";
 
 const clientId =
   "203749460506-a0p2pi5i1pbu785e67v8onavcubi602b.apps.googleusercontent.com";
@@ -17,35 +22,60 @@ export default function Signup() {
     password: "",
   });
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(false);
+  const [spinner, setSpinner] = useState(true);
+  const [message, setMessage] = useState("");
   useEffect(() => {
     const handleGoogleResponse = async (response) => {
-      const res = await fetch(
-        "https://efiledemo-3.onrender.com/api/auth/google-login",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ tokenId: response.credential }),
+      {
+        spinner && <Loader />;
+      }
+
+      try {
+        const res = await fetch(
+          "https://efiledemo-3.onrender.com/api/auth/google-login",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ tokenId: response.credential }),
+          }
+        );
+
+        const data = await res.json();
+
+        if (res.ok) {
+          setSpinner(false);
+          // Save user data in localStorage
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("user", JSON.stringify(data.user));
+
+          toast.success("Google Login Successful! 🎉", {
+            position: "top-center",
+          });
+
+          navigate("/homepage");
+        } else {
+          toast.error(data.message || "Google Login failed!", {
+            position: "top-right",
+          });
         }
-      );
-      const data = await res.json();
-      console.log(data);
-      alert("Google Login Successful!");
-      localStorage.setItem("token", data.token);
-      navigate("/Services");
+      } catch (error) {
+        toast.error("Error during Google authentication!", {
+          position: "top-right",
+        });
+      }
     };
 
     if (window.google) {
       window.google.accounts.id.initialize({
         client_id: clientId,
         callback: handleGoogleResponse,
+        ux_mode: "popup", // Ensures login happens in a popup, not a new tab
       });
+
       window.google.accounts.id.renderButton(
         document.getElementById("googleSignInBtn"),
-        {
-          theme: "outline",
-          size: "large",
-        }
+        { theme: "outline", size: "large" }
       );
     }
   }, [navigate]);
@@ -56,6 +86,11 @@ export default function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    {
+      spinner && <Loader />;
+    }
+
     const url = isLogin
       ? "https://efiledemo-3.onrender.com/api/auth/login"
       : "https://efiledemo-3.onrender.com/api/auth/signup";
@@ -69,14 +104,27 @@ export default function Signup() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dataToSend),
       });
+
       const data = await res.json();
-      alert(data.message);
+
       if (res.ok) {
+        setLoading(false);
+        setSpinner(false);
+        // Store token and user data in localStorage
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+
+        toast.success("Login Successful! 🎉", { position: "top-center" });
+
         setFormData({ fullName: "", email: "", password: "" });
-        navigate("/Services");
+        navigate("/homepage"); // Uncomment this for navigation after login
+      } else {
+        toast.error(data.message || "Login failed!", { position: "top-right" });
       }
     } catch (error) {
-      alert("Error during authentication");
+      toast.error("Error during authentication!", { position: "top-right" });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -156,8 +204,17 @@ export default function Signup() {
                     {showPassword ? <EyeOff /> : <Eye />}
                   </button>
                 </div>
-                <button className="w-full mt-4 py-2 bg-teal-600 hover:bg-teal-600 rounded-lg font-bold">
-                  {isLogin ? "Login" : "Signup"}
+                <button
+                  className="w-full mt-4 py-2 bg-teal-600 hover:bg-teal-500 rounded-lg font-bold flex justify-center items-center"
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <FaSpinner className="animate-spin h-5 w-5 mr-2" />
+                  ) : isLogin ? (
+                    "Login"
+                  ) : (
+                    "Signup"
+                  )}
                 </button>
               </form>
 
