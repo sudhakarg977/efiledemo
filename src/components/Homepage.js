@@ -64,7 +64,7 @@ const Homepage = () => {
         {/* Content */}
         <div className="relative z-10 max-w-5xl mx-auto font-nunito font-semibold">
           <motion.h1
-            className="text-4xl md:text-5xl font-bold mb-4"
+            className="text-4xl md:text-5xl font-bold mb-4 text-white-600 font-semibold text-white"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -189,7 +189,7 @@ const Homepage = () => {
         <div className="relative flex flex-col md:flex-row w-full z-10">
           {/* Left Content */}
           <div className="flex-1 pr-0 md:pr-5 text-white text-center md:text-left">
-            <h2 className="text-3xl md:text-5xl font-bold leading-tight tracking-wide font-baskerville animate-slideInTop">
+            <h2 className="text-white-600 font-semibold  mb-8 text-white text-3xl md:text-5xl font-bold leading-tight tracking-wide font-baskerville animate-slideInTop">
               Needs Professional <br /> Tax Service? <br /> Contact Us
             </h2>
             <p className="mt-4 text-lg animate-slideInTop delay-300">
@@ -253,23 +253,23 @@ const Homepage = () => {
       </section>
 
       <section className="bg-teal-500 text-white py-24 px-12 text-center relative">
-        <h1 className="text-3xl font-extrabold uppercase tracking-wider mb-8 font-playfair leading-tight text-white drop-shadow-lg">
+        <h1 className="text-white-600 text-4xl font-semibold  mb-8 text-white ">
           What's the necessity?
         </h1>
-        <div className="flex flex-col md:flex-row items-center justify-center gap-24">
-          <div className="text-2xl font-semibold font-inter text-center">
-            Income Tax, GST <br /> & ROC Filing
+        <div className="flex flex-col md:flex-row items-center justify-center gap-28">
+          <div className="text-white-600 text-lg font-semibold text-white">
+            Income Tax, GST & ROC Filing
           </div>
-          <div className="w-px h-16 bg-teal-200"></div>
+          <div className="w-px h-16 bg-teal-200 mr-5"></div>
           <div className="text-lg font-medium font-inter text-center">
             Let us understand our tax
           </div>
-          <div className="w-px h-16 bg-teal-200"></div>
+          <div className="w-px h-16 bg-teal-200 mr-14"></div>
           {/* Button */}
           <div className="flex flex-col items-center">
             <a
               href="#"
-              className="bg-white text-teal-600 px-6 py-2 rounded-lg text-lg font-semibold font-dmSans shadow-md hover:bg-teal-700 hover:text-white transition"
+              className="bg-white text-teal-600 px-4 py-2 rounded-lg text-lg font-semibold font-dmSans shadow-md hover:bg-teal-700 hover:text-white transition mr-10"
             >
               Discover More
             </a>

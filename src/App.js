@@ -1,26 +1,55 @@
 import "./App.css";
-import Content from "./components/Content";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Slidebar from "./components/Slidebar";
 import ContactPage from "./components/ContactPage";
 import SignUp from "./components/SignUp";
 import Services from "./components/Services";
-import { Home } from "lucide-react";
 import Homepage from "./components/Homepage";
-import Dashboard from "./components/Dashboard";
+import Dashboard from "./components/Dashboard/Dashboard";
+import UserCotent from "./components/Dashboard/UserCotent";
+import { useState } from "react";
+import Sidebar from "./components/Dashboard/Sidebar";
+import Navbar from "./components/Dashboard/Navbar";
+import ContactUs from "./components/Dashboard/ContactUs";
+
+function AdminLayout() {
+  const [activeTab, setActiveTab] = useState("dashboard");
+
+  return (
+    <div className="flex">
+      {/* Sidebar - Only Visible in Admin Pages */}
+      <Sidebar setActiveTab={setActiveTab} />
+
+      <div className="flex-1 ml-64">
+        {/* Navbar - Only Visible in Admin Pages */}
+        <Navbar />
+
+        {/* Main Content - Changes Based on Active Tab */}
+        <div className="p-4">
+          {activeTab === "dashboard" && <Dashboard />}
+          {activeTab === "users" && <UserCotent />}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function App() {
   return (
     <Router>
       <Routes>
+        {/* Public Routes */}
         <Route path="/" element={<Homepage />} />
         <Route path="/Homepage" element={<Homepage />} />
-        <Route path="/dashboard" element={<Content />} />
-        <Route path="/admin" element={<Dashboard />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<SignUp />} />
         <Route path="/services" element={<Services />} />
+        <Route path="/contact" element={<ContactUs />} />
+
+        {/* Admin Routes */}
+        <Route path="/admin" element={<AdminLayout />} />
+
+        {/* 404 Page (Optional) */}
         {/* <Route path="*" element={<h1>Not Found</h1>} /> */}
       </Routes>
     </Router>

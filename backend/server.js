@@ -8,6 +8,8 @@ import cookieParser from "cookie-parser";
 import passport from "passport";
 import "./config/passport.js";
 import path from "path";
+import { fileURLToPath } from "url";
+import fs from "fs";
 
 const app = express();
 
@@ -49,8 +51,10 @@ mongoose
 // Routes
 app.use("/api/auth", authRoutes);
 app.use(express.urlencoded({ extended: true }));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-app.use("/uploads", express.static("uploads"));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.get("/api/db-check", async (req, res) => {
   try {
@@ -69,7 +73,7 @@ app.get("/api/health", (req, res) => {
 });
 
 // Handling the Port Issue: If the default port is taken, try another
-const PORT = process.env.PORT || 10000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, (err) => {
   if (err) {

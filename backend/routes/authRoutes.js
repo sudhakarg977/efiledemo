@@ -132,54 +132,40 @@ router.post("/google-login", async (req, res) => {
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/"); // Save files in 'uploads' directory
+    const uploadDir = path.join(__dirname, "uploads");
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir);
+    }
+    cb(null, uploadDir);
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); // Unique file name
+    cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
 
 const upload = multer({ storage });
-router.post("/uploads", upload.single("file"), (req, res) => {
+router.post("/api/upload", upload.single("file"), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: "No file uploaded" });
   }
+
   res.json({
-    fileName: req.file.filename,
-    filePath: `/uploads/${req.file.filename}`,
+    message: "File uploaded successfully",
+    fileUrl: `/uploads/${req.file.filename}`, // Return the uploaded file URL
   });
 });
 
-router.get("/uploads", (req, res) => {
-  fs.readdir("uploads", (err, files) => {
-    if (err) return res.status(500).json({ message: "Error fetching files" });
-
-    const fileList = files.map((file) => ({
-      fileName: file,
-      filePath: `/uploads/${file}`,
-    }));
-    res.json(fileList);
-  });
-});
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 // Route to get list of uploaded files
-router.get("/files", (req, res) => {
-  const uploadDir = path.join(__dirname, "../uploads");
-  // Path to the uploads folder
-
-  // Read the directory to get the list of files
+router.get("/api/files", (req, res) => {
+  const uploadDir = path.join(__dirname, "uploads");
   fs.readdir(uploadDir, (err, files) => {
     if (err) {
-      return res
-        .status(500)
-        .json({ message: "Unable to read files", error: err.message });
+      return res.status(500).json({ message: "Unable to read files" });
     }
 
-    // Create file list with names and URLs
     const fileList = files.map((file) => ({
       name: file,
-      url: `/uploads/${file}`, // Public URL to access the file
+      url: `/uploads/${file}`,
     }));
 
     res.json(fileList);

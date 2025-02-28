@@ -25,7 +25,7 @@ const PermanentInformationForm = () => {
 
     try {
       const response = await axios.post(
-        "https://efiledemo-3.onrender.com/api/auth/uploads",
+        "http://localhost:5000/api/auth/upload",
         formData,
         {
           headers: {
