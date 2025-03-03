@@ -40,23 +40,88 @@ const sendWelcomeEmail = async (email, name) => {
   }
 };
 
+// router.post("/signup", async (req, res) => {
+//   const { fullName, email, password } = req.body;
+
+//   try {
+//     let user = await User.findOne({ email });
+//     if (user) return res.status(400).json({ message: "User already exists" });
+
+//     const hashedPassword = await bcrypt.hash(password.trim(), 10);
+//     console.log("Hashed password:", hashedPassword);
+//     user = new User({ fullName, email, password: hashedPassword });
+
+//     await user.save();
+//     console.log("User saved, sending welcome email...");
+//     await sendWelcomeEmail(email, fullName);
+//     res.json({ message: "User registered successfully" });
+//   } catch (error) {
+//     res.status(500).json({ message: "Server error" });
+//   }
+// });
 router.post("/signup", async (req, res) => {
-  const { fullName, email, password } = req.body;
-
   try {
-    let user = await User.findOne({ email });
-    if (user) return res.status(400).json({ message: "User already exists" });
+    const { fullName, email, password } = req.body;
 
-    const hashedPassword = await bcrypt.hash(password.trim(), 10);
-    console.log("Hashed password:", hashedPassword);
-    user = new User({ fullName, email, password: hashedPassword });
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser)
+      return res.status(400).json({ message: "User already exists" });
 
-    await user.save();
-    console.log("User saved, sending welcome email...");
-    await sendWelcomeEmail(email, fullName);
-    res.json({ message: "User registered successfully" });
+    // Hash Password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create User
+    const newUser = new User({
+      fullName,
+      email,
+      password: hashedPassword,
+      isVerified: false, // Default: not verified
+    });
+
+    await newUser.save();
+
+    // Generate verification token
+    const token = jwt.sign({ email }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    // Send verification email
+    const verificationLink = `https://efiledemo-3.onrender.com/api/auth/verify/${token}`;
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Verify Your Email",
+      html: `<h2>Welcome ${fullName}!</h2>
+             <p>Click the link below to verify your email:</p>
+             <a href="${verificationLink}">Verify Email</a>
+             <p>This link expires in 1 hour.</p>`,
+    });
+
+    res.status(201).json({
+      message:
+        "User registered! Please check your email to verify your account.",
+    });
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Error registering user", error });
+  }
+});
+
+// Email Verification Route
+router.get("/verify/:token", async (req, res) => {
+  try {
+    const { token } = req.params;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await User.findOne({ email: decoded.email });
+    if (!user) return res.status(400).json({ message: "Invalid token" });
+
+    user.isVerified = true;
+    await user.save();
+
+    res.send("<h2>Email verified successfully! You can now log in.</h2>");
+  } catch (error) {
+    res.status(400).json({ message: "Invalid or expired token" });
   }
 });
 
